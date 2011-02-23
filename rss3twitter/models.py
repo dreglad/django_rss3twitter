@@ -162,11 +162,11 @@ class PublicacionTwitter(models.Model):
             if not self.aplicacion.bitly_login and not self.aplicacion.bitly_api_key:
                 raise Exception # Lanzar excepción si no se puede conectar a Bitly
             api = bitly.Api(login=self.aplicacion.bitly_login, apikey=self.aplicacion.bitly_api_key)
-            link = u' %s' % api.shorten(feed_entry.link)
+            link = u'%s ' % api.shorten(feed_entry.link)
             link_len = len(link)
         except:
             # Si no se pudo conectar a bitly dar por hecho que twitter acorará la URL con bit.ly
-            link = u' %s' % feed_entry.link
+            link = u'%s ' % feed_entry.link
             link_len = 20 + 1 # default bit.ly
 
         # Detemrina el cuerpo mensaje calculando número de caracteres que nos quedan para el mensaje
@@ -177,7 +177,7 @@ class PublicacionTwitter(models.Model):
             mensaje = u'%s ' % feed_entry.title.strip()
 
         # COnstruye y devuelve el mensaje
-        return u'%s%s%s%s' % (prefijo, mensaje, hashtags, link)
+        return u'%s%s%s%s' % (prefijo, mensaje, link, hashtags)
 
 
     def getFeedEntries(self):
