@@ -28,6 +28,7 @@ class AplicacionTwitter(models.Model):
 
 class CuentaTwitter(models.Model):
     usuario = models.CharField(max_length=255)
+    monitored = models.BooleanField(default=False)
     activo = models.BooleanField(default=True)
 
     def __unicode__(self):
@@ -46,7 +47,10 @@ class AplicacionCuentaTwitter(models.Model):
 
     def get_twitter_object(self):
         return OAuthApi(self.aplicacion.consumer_key, self.aplicacion.consumer_secret, self.oauth_token, self.oauth_token_secret)
-    
+
+    def __unicode__(self):
+        return u'app:%s account:%s' % (self.aplicacion, self.cuenta_twitter)
+
 
 class FeedRSS(models.Model):
     url = models.URLField()
